@@ -24,6 +24,11 @@ export LDFLAGS="${LINK_FLAGS}"
     --build-toolchain-only \
     --skip-local-build \
     --skip-local-host-install \
+    --swift-enable-backtracing=0 \
+    --swift-threading-package=c11 \
+    --swift-stdlib-supports-backtrace-reporting=0 \
+    --enable-experimental-cxx-interop=0 \
+    --enable-cxx-interop-swift-bridging-header=0 \
     --native-swift-tools-path=$SWIFT_NATIVE_PATH \
     --native-clang-tools-path=$SWIFT_NATIVE_PATH \
     --cross-compile-hosts=linux-armv7 \
@@ -35,8 +40,6 @@ export LDFLAGS="${LINK_FLAGS}"
     --install-cmark \
     --libdispatch --foundation --xctest \
     --install-foundation --install-libdispatch --install-xctest \
-    --llbuild --swiftpm --sourcekit-lsp --indexstore-db \
-    --install-llbuild --install-swiftpm --install-sourcekit-lsp \
     --install-destdir=$SWIFT_INSTALL_PREFIX \
     --build-dir=$SRC_ROOT/build \
     --workspace=$SRC_ROOT/downloads \
