@@ -17,7 +17,7 @@ else
     echo "Patch Swift"
     cd ./swift
     # git apply $SRC_ROOT/patches/swift/001-Float16.patch
-    patch $SWIFT_SRCDIR/stdlib/public/runtime/Float16Support.cpp $SRC_ROOT/patches/swift/001-swift-float16.patch
+    #patch $SWIFT_SRCDIR/stdlib/public/runtime/Float16Support.cpp $SRC_ROOT/patches/swift/001-swift-float16.patch
     #git apply $SRC_ROOT/patches/swift/002-swift-include-swift-AST-Expr.h.patch
     #git apply $SRC_ROOT/patches/swift/003-swift-include-swift-Basic-BridgingUtils.h.patch
     #git apply $SRC_ROOT/patches/swift/004-swift-targets.patch

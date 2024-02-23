@@ -11,7 +11,7 @@ STAGING_DIR="${STAGING_DIR:=$SRC_ROOT/bullseye-armv7}"
 if [[ $OSTYPE == 'darwin'* ]]; then
     SWIFT_NATIVE_PATH="${SWIFT_NATIVE_PATH:=$XCTOOLCHAIN/usr/bin}"
 else
-    SWIFT_NATIVE_PATH="${SWIFT_NATIVE_PATH:=/usr/bin}"
+    SWIFT_NATIVE_PATH="${SWIFT_NATIVE_PATH:=/opt/swift/5.9.2/usr/bin}"
 fi
 SWIFT_BUILD_CONFIGURATION="${SWIFT_BUILD_CONFIGURATION:=Release}"
 SWIFTPM_CONFIGURATION="${SWIFTPM_CONFIGURATION:=release}"
@@ -40,7 +40,7 @@ EXTRA_FLAGS="-march=armv7-a -mthumb -mfpu=neon -mfloat-abi=hard"
 RUNTIME_FLAGS="-w -fuse-ld=lld --sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME} ${EXTRA_FLAGS} -B${STAGING_DIR}/usr/lib -B${STAGING_DIR}/lib -B${STAGING_DIR}/usr/lib/arm-linux-gnueabihf -B${STAGING_DIR}/lib/arm-linux-gnueabihf -B${STAGING_DIR}/usr/lib/gcc/arm-linux-gnueabihf/9"
 LINK_FLAGS="--sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME} ${EXTRA_FLAGS} -latomic"
 ASM_FLAGS="--sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME}"
-SWIFT_COMPONENTS="autolink-driver;compiler;clang-resource-dir-symlink;swift-remote-mirror;parser-lib;license;sourcekit-inproc;stdlib;sdk-overlay"
+SWIFT_COMPONENTS="autolink-driver;compiler;clang-resource-dir-symlink;swift-remote-mirror;license;sourcekit-inproc;stdlib;sdk-overlay"
 LLVM_COMPONENTS="IndexStore;clang;clang-resource-headers;compiler-rt;clangd;lld;LTO;clang-features-file"
 
 SWIFTC_FLAGS="-target ${SWIFT_TARGET_NAME} -use-ld=lld \
