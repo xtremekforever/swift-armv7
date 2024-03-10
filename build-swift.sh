@@ -37,7 +37,6 @@ export LDFLAGS="${LINK_FLAGS}"
     --swift-install-components="${SWIFT_COMPONENTS}" \
     --llvm-install-components="${LLVM_COMPONENTS}" --install-llvm --install-lldb \
     --install-swift \
-    --install-cmark \
     --libdispatch --foundation --xctest \
     --install-foundation --install-libdispatch --install-xctest \
     --install-destdir=$SWIFT_INSTALL_PREFIX \
