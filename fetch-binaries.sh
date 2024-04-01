@@ -28,6 +28,7 @@ if [[ "$DOWNLOAD_SWIFT_RUNTIME" == "1" ]]; then
 fi
 
 # Download Debian 11 sysroot
+mkdir -p $SRC_ROOT/downloads
 DOWNLOAD_FILE=$SRC_ROOT/downloads/bullseye-armv7.tar
 SRCURL=https://github.com/colemancda/swift-armv7/releases/download/0.4.0/bullseye-armv7.tar
 if [[ -d "$STAGING_DIR/usr/lib" ]]; then
