@@ -217,7 +217,7 @@ find "$linux_sdk_name" -type l | while read -r line; do
         ln -s "${fixedlink#./}" "${line#./}"
     fi
 done
-ln -s 5 "$linux_sdk_name/usr/lib/gcc/arm-linux-gnueabihf/12"
+ln -s 5 "$linux_sdk_name/usr/lib/gcc/arm-linux-gnueabihf/9"
 
 tmp=$(mktemp -d "$dest/tmp_pkgs_XXXXXX")
 unpack "$tmp" "$macos_swift_pkg"
