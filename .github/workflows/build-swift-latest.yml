@@ -13,7 +13,7 @@ jobs:
   build-latest:
     strategy:
       matrix:
-        version: ["6.0.3"]
+        version: ["6.0.1"]
     env:
       SWIFT_VERSION: ${{ matrix.version }}
       SWIFT_TAG: swift-${{ matrix.version }}-RELEASE
