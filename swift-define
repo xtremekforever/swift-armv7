@@ -8,13 +8,13 @@ case ${SWIFT_TARGET_ARCH} in
         DEBIAN_TARGET_ARCH=armhf
         # The only version of armv6 supported is the RPI ARM1176JZF-S, which is only supported by Raspbian
         # If you attempt to build for armv6 with a Ubuntu or Debian sysroot, binaries will fail to run!!!
-        EXTRA_FLAGS="-march=armv6 -mfpu=vfp -mfloat-abi=hard"
+        EXTRA_FLAGS="${EXTRA_FLAGS:=-march=armv6 -mfpu=vfp -mfloat-abi=hard}"
         SWIFT_TARGET_NAME=${SWIFT_TARGET_ARCH}-unknown-linux-gnueabihf
         ;;
     armv7)
         CMAKE_TARGET_ARCH="armv7-a"
         DEBIAN_TARGET_ARCH=armhf
-        EXTRA_FLAGS="-march=${CMAKE_TARGET_ARCH} -mfpu=neon -mfloat-abi=hard"
+        EXTRA_FLAGS="${EXTRA_FLAGS:=-march=armv7-a -mfpu=neon -mfloat-abi=hard}"
         SWIFT_TARGET_NAME=${SWIFT_TARGET_ARCH}-unknown-linux-gnueabihf
         ;;
     aarch64)
@@ -80,8 +80,21 @@ INSTALL_TAR=${INSTALL_TAR:=$SRC_ROOT/build/$SWIFT_VERSION-$SWIFT_TARGET_ARCH.tar
 PREBUILT_XCTOOLCHAIN=$SRC_ROOT/downloads/${SWIFT_VERSION}-osx.pkg
 
 # Compilation flags
-RUNTIME_FLAGS="-w -fuse-ld=lld --sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME} ${EXTRA_FLAGS}"
-LINK_FLAGS="--sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME} ${EXTRA_FLAGS}"
+
+# If GCC_VERSION is passed, we assume that there's a non-standard layout in the sysroot for it
+# to be auto-detected
+if [ $GCC_VERSION ]; then
+    EXTRA_INCLUDES="$EXTRA_INCLUDES -I${STAGING_DIR}/usr/include -I${STAGING_DIR}/usr/include/c++/${GCC_VERSION}"
+    if [ $GCC_CUSTOM_TRIPLE ]; then
+        EXTRA_FLAGS="$EXTRA_FLAGS --gcc-install-dir=${STAGING_DIR}/usr/lib/${GCC_CUSTOM_TRIPLE}/${GCC_VERSION}"
+        EXTRA_INCLUDES="$EXTRA_INCLUDES -I${STAGING_DIR}/usr/include/c++/${GCC_VERSION}/${GCC_CUSTOM_TRIPLE}"
+    fi
+fi
+echo "Extra Includes: ${EXTRA_INCLUDES}"
+echo "Extra Flags: ${EXTRA_FLAGS}"
+
+RUNTIME_FLAGS="-w -fuse-ld=lld --sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME} ${EXTRA_INCLUDES} ${EXTRA_FLAGS}"
+LINK_FLAGS="--sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME} ${EXTRA_INCLUDES} ${EXTRA_FLAGS}"
 ASM_FLAGS="--sysroot=${STAGING_DIR} -target ${SWIFT_TARGET_NAME}"
 
 SWIFTC_FLAGS="-target ${SWIFT_TARGET_NAME} \
